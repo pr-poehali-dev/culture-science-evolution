@@ -10,6 +10,7 @@ interface Slide {
   content: string[];
   year?: string;
   timeline?: Array<{ year: string; event: string }>;
+  image?: string;
 }
 
 const slides: Slide[] = [
@@ -22,7 +23,8 @@ const slides: Slide[] = [
       "Эпоха между двумя мировыми войнами",
       "Время революционных открытий и культурных трансформаций",
       "Формирование новых художественных направлений"
-    ]
+    ],
+    image: "/img/fe4ca069-0c67-42e4-af78-bc97b08775b4.jpg"
   },
   {
     id: 2,
@@ -40,7 +42,8 @@ const slides: Slide[] = [
       { year: "1917", event: "Революция в России" },
       { year: "1918", event: "Окончание войны, пандемия гриппа" },
       { year: "1920-е", event: "«Золотые двадцатые» на Западе" }
-    ]
+    ],
+    image: "/img/fe4ca069-0c67-42e4-af78-bc97b08775b4.jpg"
   },
   {
     id: 3,
@@ -57,7 +60,8 @@ const slides: Slide[] = [
       { year: "1916", event: "Открытие структуры ДНК" },
       { year: "1918", event: "Разработка новых лекарств" },
       { year: "1919", event: "Подтверждение теории Эйнштейна" }
-    ]
+    ],
+    image: "/img/d2a6fa6e-4caa-43ee-92f5-fd938f46d96b.jpg"
   },
   {
     id: 4,
@@ -74,7 +78,8 @@ const slides: Slide[] = [
       { year: "1925", event: "Квантовая механика Гейзенберга" },
       { year: "1928", event: "Открытие пенициллина" },
       { year: "1930", event: "Открытие Плутона" }
-    ]
+    ],
+    image: "/img/d2a6fa6e-4caa-43ee-92f5-fd938f46d96b.jpg"
   },
   {
     id: 5,
@@ -91,7 +96,8 @@ const slides: Slide[] = [
       { year: "1917", event: "Манифест дадаизма" },
       { year: "1920", event: "Конструктивизм в СССР" },
       { year: "1925", event: "Сюрреализм Дали и Магритта" }
-    ]
+    ],
+    image: "/img/931a09ed-c6ff-4adc-8147-ba1f6f1c41d6.jpg"
   },
   {
     id: 6,
@@ -194,9 +200,23 @@ export default function Presentation() {
             )}
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            {/* Historical Image */}
+            {slide.image && (
+              <div className="lg:col-span-1">
+                <div className="relative overflow-hidden rounded-lg shadow-lg">
+                  <img
+                    src={slide.image}
+                    alt={slide.title}
+                    className="w-full h-64 lg:h-80 object-cover transition-transform duration-300 hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+                </div>
+              </div>
+            )}
+
             {/* Content */}
-            <div className="space-y-4">
+            <div className={`space-y-4 ${slide.image ? 'lg:col-span-1' : 'lg:col-span-2'}`}>
               {slide.content.map((item, index) => (
                 <div
                   key={index}
@@ -211,7 +231,7 @@ export default function Presentation() {
 
             {/* Timeline */}
             {slide.timeline && (
-              <div className="space-y-4">
+              <div className={`space-y-4 ${slide.image ? 'lg:col-span-1' : 'lg:col-span-1'}`}>
                 <h3 className="text-lg font-semibold text-primary mb-4 flex items-center gap-2">
                   <Icon name="Clock" size={20} />
                   Хронология событий
